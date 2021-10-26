@@ -1,13 +1,10 @@
-import java.awt.*;
-import java.awt.geom.PathIterator;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GenerateDisplay{
+public class Display {
 
-    public List<Pair> createDisplay(List<Painting> daliPaintings, List<Painting> picassoPaintings){
+    public List<Pair> display(List<Painting> daliPaintings, List<Painting> picassoPaintings){
 
         verifyDali(daliPaintings);
         verifyPicasso(picassoPaintings);
@@ -66,6 +63,10 @@ public class GenerateDisplay{
     }
 
     public static void merge(List<Painting> left, List<Painting> right, List<Painting> whole){
+        Objects.requireNonNull(left);
+        Objects.requireNonNull(right);
+        Objects.requireNonNull(whole);
+
         int leftIndex = 0;
         int rightIndex = 0;
         int indexWhole = 0;
@@ -168,22 +169,26 @@ public class GenerateDisplay{
         return display;
     }
 
-    public void verifyDali(List<Painting> daliPaintings){
+    public static boolean verifyDali(List<Painting> daliPaintings){
         Objects.requireNonNull(daliPaintings);
 
         for (Painting painting : daliPaintings){
             if (!(painting instanceof Dali))
                 throw new RuntimeException("This List contains non-Dali paintings");
         }
+        return true;
     }
 
-    public void verifyPicasso(List<Painting> picassoPaintings){
+    public boolean verifyPicasso(List<Painting> picassoPaintings){
         Objects.requireNonNull(picassoPaintings);
 
         for (Painting painting : picassoPaintings){
-            if(!(painting instanceof Picasso))
+            if(!(painting instanceof Picasso)) {
                 throw new RuntimeException("This List contains non-Picasso paintings");
+            }
         }
+
+        return true;
     }
 }
 
