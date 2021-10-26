@@ -101,12 +101,15 @@ public class Display {
     }
 
     public List<List<Painting>> generateCombinations(List<Painting> daliPaintings, int numberOfPaintingsDisplayed){
+        Objects.requireNonNull(daliPaintings);
         List<List<Painting>> combinations = new ArrayList<>();
         recursiveGeneration(combinations, daliPaintings, 0, daliPaintings.size() - 1, 0);
         return combinations;
     }
 
     public void recursiveGeneration(List<List<Painting>> combinations, List<Painting> data, int start, int end, int index){
+        Objects.requireNonNull(combinations);
+        Objects.requireNonNull(data);
 
         if(index == data.size()){
             combinations.add(data);
@@ -123,14 +126,17 @@ public class Display {
         int numberOfMatches = 0;
         int lastPicassoUsed = 0;
 
-        for (Painting dali : daliPainting) {
-            for (int i = lastPicassoUsed; i < picassoPaintings.size(); i++) {
-                if (dali.height() > picassoPaintings.get(i).height()) {
-                    lastPicassoUsed = i;
-                    numberOfMatches = numberOfMatches + 1;
+
+            for (Painting dali : daliPainting) {
+                for (int i = lastPicassoUsed; i < picassoPaintings.size(); i++) {
+                    if (dali.height() > picassoPaintings.get(i).height()) {
+                        lastPicassoUsed = i;
+                        numberOfMatches = numberOfMatches + 1;
+                        break;
+                    }
                 }
             }
-        }
+
         return numberOfMatches;
     }
 
@@ -162,6 +168,7 @@ public class Display {
                     indexOfLastPicassoUsed = i;
                     Pair pair = new Pair((Dali)dali, (Picasso)picassoPaintings.get(i));
                     display.add(pair);
+                    break;
                 }
             }
         }
